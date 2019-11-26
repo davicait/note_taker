@@ -26,3 +26,28 @@ const write = read => {
         }   
      );
 };
+
+// Express
+const app = express();
+const PORT = process.env.PORT || 3000;
+
+app.use(express.urlencoded({ extended: true}));
+app.use(express.json());
+app.use(express.static("public"));
+
+// Server Routes
+app.get("/", function(req, res) {
+    res.sendFile(path.join(__dirname, "/develop/index.html"));
+});
+
+app.get("/index", function(req, res) {
+    res.sendFile(path.join(__dirname, "/develop/index.html"));
+});
+
+app.get("/notes", function(req, res) {
+    res.sendFile(path.join(__dirname, "/develop/notes.html"));
+});
+
+app.get("/api/notes", function(req, res) {
+    return res.json(read);
+})
