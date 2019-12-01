@@ -4,7 +4,7 @@ const fs = require("fs");
 
 let counter = 1;
 
-const db = path.join(__dirname, "/db/db.json");
+const db = path.join(__dirname, "/develop/db/db.json");
 
 // Process to read JSON file
 const read = JSON.parse(
@@ -19,7 +19,7 @@ const write = read => {
         return x != null;
     });
     fs.writeFileSync(
-        path.join(__dirname, "/db/db.json"),
+        path.join(__dirname, "/develop/db/db.json"),
         JSON.stringify(filtered),
         err => {
             if (err) throw err;
@@ -60,4 +60,17 @@ app.post("/api/notes", (req, res) => {
     read.push(newNote);
     write(read);
     return res.json(read);
+});
+
+// Delete Method
+app.delete("/api/notes/:id", (req, res) => {
+    let id = req.params.id;
+    delete read[id -1];
+    write(read);
+    res.send(read);
+});
+
+// Run Server
+app.listen(PORT, function() {
+    console.log("app listening on PORT " + PORT);
 });
