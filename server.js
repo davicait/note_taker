@@ -50,4 +50,14 @@ app.get("/notes", function(req, res) {
 
 app.get("/api/notes", function(req, res) {
     return res.json(read);
-})
+});
+
+// Post Method
+app.post("/api/notes", (req, res) => {
+    let newNote = req.body;
+    newNote.id = counter;
+    counter++;
+    read.push(newNote);
+    write(read);
+    return res.json(read);
+});
