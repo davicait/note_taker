@@ -7,7 +7,7 @@ var $noteList = $(".list-container .list-group");
 // activeNote is used to keep track of the note in the textarea
 var activeNote = {};
 
-// A function for getting all notes from the db
+//Get function 
 var getNotes = function() {
   return $.ajax({
     url: "/api/notes",
@@ -15,7 +15,7 @@ var getNotes = function() {
   });
 };
 
-// A function for saving a note to the db
+//Save Function
 var saveNote = function(note) {
   return $.ajax({
     url: "/api/notes",
@@ -24,7 +24,7 @@ var saveNote = function(note) {
   });
 };
 
-// A function for deleting a note from the db
+//Delete Function
 var deleteNote = function(id) {
   return $.ajax({
     url: "api/notes/" + id,
@@ -32,7 +32,7 @@ var deleteNote = function(id) {
   });
 };
 
-// If there is an activeNote, display it, otherwise render empty inputs
+//Display available active notes or render empty
 var renderActiveNote = function() {
   $saveNoteBtn.hide();
 
@@ -49,7 +49,7 @@ var renderActiveNote = function() {
   }
 };
 
-// Get the note data from the inputs, save it to the db and update the view
+//Get note data save
 var handleNoteSave = function() {
   var newNote = {
     title: $noteTitle.val(),
@@ -64,7 +64,6 @@ var handleNoteSave = function() {
 
 // Delete the clicked note
 var handleNoteDelete = function(event) {
-  // prevents the click listener for the list from being called when the button inside of it is clicked
   event.stopPropagation();
 
   var note = $(this)
@@ -111,7 +110,7 @@ var renderNoteList = function(notes) {
 
   for (var i = 0; i < notes.length; i++) {
     var note = notes[i];
-
+    if (note != null) {
     var $li = $("<li class='list-group-item'>").data(note);
     var $span = $("<span>").text(note.title);
     var $delBtn = $(
@@ -120,7 +119,7 @@ var renderNoteList = function(notes) {
 
     $li.append($span, $delBtn);
     noteListItems.push($li);
-  }
+  }}
 
   $noteList.append(noteListItems);
 };
